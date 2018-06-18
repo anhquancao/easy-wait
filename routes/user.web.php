@@ -8,11 +8,11 @@ Route::namespace("Auth")->group(function(){
     Route::get('login', "CustomerLoginController@showLoginForm");
 });
 
-Route::middleware("auth.customer")->namespace("Customer")->group(function () {
+Route::middleware("auth.user")->namespace("Customer")->group(function () {
     Route::get("home", "CustomerHomeController@index");
 });
 
 
 Route::get('/', function () {
-    return "home customer";
+    return "home user";
 })->name("customer.home");
