@@ -1,0 +1,60 @@
+version: '3'
+services:
+  node:
+    image: node
+    container_name: node_poc
+    working_dir: /app
+    build:
+      context: ./docker/node
+      dockerfile: Dockerfile
+    volumes:
+      - ./node:/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+
+  redis2:
+    image: redis
+    container_name: redis_poc
+    ports:
+      - "6379:6379"
+
+  workspace:
+    container_name: workspace_poc
+    build:
+      context: ./docker/php
+      dockerfile: Dockerfile
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+
+  nginx:
+    container_name: localhost
+    build:
+      context: ./docker/nginx
+      dockerfile: Dockerfile
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+    ports:
+      - 80:80
+    depends_on:
+      - workspace
+      - postgres
+      - redis2
+
+  postgres:
+    container_name: postgres_poc
+    image: postgres:10.3
+    volumes:
+      - pgdata_poc:/var/lib/postgres
+    environment:
+        - POSTGRES_DB=keetool-academy
+        - POSTGRES_USER=default
+        - POSTGRES_PASSWORD=default
+    ports:
+        - "54320:5432"
+
+volumes:
+  pgdata_poc:
