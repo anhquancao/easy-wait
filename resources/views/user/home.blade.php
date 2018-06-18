@@ -1,6 +1,6 @@
 @extends('layouts.customer')
 
-@section('title', "Customer Home Page")
+@section('title', "User Home Page")
 
 @section('content')
 <div class="container">

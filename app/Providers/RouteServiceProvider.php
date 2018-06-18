@@ -40,7 +40,16 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapWebRoutes();
 
         $this->mapCustomerWebRoutes();
-        //
+
+        $this->mapUserWebRoutes();
+    }
+
+    protected function mapUserWebRoutes()
+    {
+        Route::middleware('web')
+            ->namespace($this->namespace)
+            ->prefix("user")
+            ->group(base_path('routes/user.web.php'));
     }
 
     protected function mapCustomerWebRoutes()

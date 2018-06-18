@@ -2,14 +2,14 @@
 
 
 Route::namespace("Auth")->group(function(){
-    Route::get('register', "CustomerRegisterController@showRegistrationForm");
-    Route::post('register', "CustomerRegisterController@register")->name("customer.register");
-    Route::post('login', "CustomerLoginController@login")->name("customer.login");
-    Route::get('login', "CustomerLoginController@showLoginForm");
+    Route::get('register', "UserRegisterController@showRegistrationForm");
+    Route::post('register', "UserRegisterController@register")->name("user.register");
+    Route::post('login', "UserLoginController@login")->name("user.login");
+    Route::get('login', "UserLoginController@showLoginForm");
 });
 
-Route::middleware("auth.user")->namespace("Customer")->group(function () {
-    Route::get("home", "CustomerHomeController@index");
+Route::middleware("auth.user")->namespace("User")->group(function () {
+    Route::get("home", "UserHomeController@index");
 });
 
 
