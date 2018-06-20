@@ -50,7 +50,7 @@ services:
     volumes:
       - pgdata_poc:/var/lib/postgres
     environment:
-        - POSTGRES_DB=keetool-academy
+        - POSTGRES_DB=easywait
         - POSTGRES_USER=default
         - POSTGRES_PASSWORD=default
     ports:
