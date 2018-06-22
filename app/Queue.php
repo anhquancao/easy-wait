@@ -2,13 +2,12 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 
-class Queue extends Model
+class Queue extends UuidModel
 {
     protected $table = 'queues';
 
     protected $fillable = [
-        'service_name', 'status', 'max_people_count'
+        'name', 'status'
     ];
 }

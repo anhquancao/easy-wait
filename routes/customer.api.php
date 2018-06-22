@@ -11,3 +11,4 @@ Route::prefix("auth")->namespace("Auth")->group(function() {
     Route::post("sign-up", "CustomerAuthApiController@signUp");
     Route::post("sign-in", "CustomerAuthApiController@signIn");
 });
+

@@ -85,7 +85,6 @@ class CustomerAuthApiController extends ApiController
                 'success' => false,
                 'message' => 'Sorry, the user cannot be logged out'
             ], 500);
-
         }
     }
 
