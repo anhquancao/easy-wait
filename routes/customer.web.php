@@ -14,5 +14,5 @@ Route::middleware("auth.customer")->namespace("Customer")->group(function () {
 
 
 Route::get('/', function () {
-    return "home customer";
+    return \File::get(public_path() . '/customer.html');;
 })->name("customer.home");
