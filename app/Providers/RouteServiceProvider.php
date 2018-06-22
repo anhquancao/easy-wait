@@ -42,6 +42,15 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapCustomerWebRoutes();
 
         $this->mapUserWebRoutes();
+
+        $this->mapCustomerApiRoutes();
+    }
+
+    protected function mapCustomerApiRoutes() {
+        Route::prefix('customer-api/v1')
+            ->middleware('api')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/customer.api.php'));
     }
 
     protected function mapUserWebRoutes()

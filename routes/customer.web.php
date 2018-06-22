@@ -13,6 +13,6 @@ Route::middleware("auth.customer")->namespace("Customer")->group(function () {
 });
 
 
-Route::get('/', function () {
-    return \File::get(public_path() . '/customer.html');;
-})->name("customer.home");
+Route::get('/{path?}', function () {
+    return view("customer.react");
+})->where("path", '.*');
