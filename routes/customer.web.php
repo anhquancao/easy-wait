@@ -1,7 +1,7 @@
 <?php
 
 
-Route::namespace("Auth")->group(function(){
+Route::namespace("Auth")->group(function () {
     Route::get('register', "CustomerRegisterController@showRegistrationForm");
     Route::post('register', "CustomerRegisterController@register")->name("customer.register");
     Route::post('login', "CustomerLoginController@login")->name("customer.login");
