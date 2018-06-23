@@ -11,5 +11,7 @@ namespace App\Repositories;
 
 interface QueueRepositoryInterface
 {
-    public function getAllQueues($search, $status);
+    // public function getQueues($search, $status);
+
+    // public function getQueue($id);
 }

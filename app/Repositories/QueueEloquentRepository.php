@@ -11,6 +11,8 @@ namespace App\Repositories;
 
 
 use App\Queue;
+use App\Http\Resources\Queue as QueueResource;
+use Illuminate\Database\QueryException;
 
 class QueueEloquentRepository extends EloquentRepository implements QueueRepositoryInterface
 {
@@ -24,8 +26,28 @@ class QueueEloquentRepository extends EloquentRepository implements QueueReposit
         return Queue::class;
     }
 
-    public function getAllQueues($search, $status)
-    {
-        // $queues = $this->
-    }
+    // public function getQueues($search, $status)
+    // {
+    //     $queues = Queue::query();
+
+    //     if ($search)
+    //         $queues = $queues->where('name', "%$search%");
+    //     if ($status)
+    //         $queues = $queues->where('status', $status);
+
+    //     $queues = $queues->orderBy('created_at', 'desc')->get();
+
+    //     return [
+    //         "queues" => $queues->map(function ($queue) {
+    //             return new QueueResource($queue);
+    //         }),
+    //     ];
+    // }
+
+    // public function getQueue($id)
+    // {
+    //     return [
+    //         'queue' => new QueueResource(Queue::find($id))
+    //     ];
+    // }
 }

@@ -25,6 +25,19 @@ class QueueApiController extends ApiController
         $this->queueRepository = $queueRepository;
     }
 
+    // public function getQueues(Request $request)
+    // {
+    //     return $this->success($this->queueRepository->getQueues($request->search, $request->status));
+    // }
+
+    // public function getQueue($id)
+    // {
+    //     if (!$this->queueRepository->checkExist($id))
+    //         return $this->badRequest("Queue doesn't exist");
+
+    //     return $this->success($this->queueRepository->getQueue($id));
+    // }
+
     public function createQueue(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -48,7 +61,7 @@ class QueueApiController extends ApiController
 
     public function updateQueue($id, Request $request)
     {
-        if(!$this->queueRepository->checkExist($id))
+        if (!$this->queueRepository->checkExist($id))
             return $this->badRequest("Queue doesn't exist");
 
         $validator = Validator::make($request->all(), [
@@ -72,9 +85,9 @@ class QueueApiController extends ApiController
 
     public function deleteQueue($id)
     {
-        if(!$this->queueRepository->checkExist($id))
+        if (!$this->queueRepository->checkExist($id))
             return $this->badRequest("Queue doesn't exist");
-        
+
         $this->queueRepository->delete($id);
         return $this->success("Success");
     }
