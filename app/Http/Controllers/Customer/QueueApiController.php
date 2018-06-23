@@ -13,6 +13,7 @@ use App\Http\Controllers\ApiController;
 use App\Repositories\QueueRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\Queue as QueueResource;
 
 class QueueApiController extends ApiController
 {
