@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: quan
@@ -21,5 +22,10 @@ class QueueEloquentRepository extends EloquentRepository implements QueueReposit
     public function getModel()
     {
         return Queue::class;
+    }
+
+    public function getAllQueues($search, $status)
+    {
+        // $queues = $this->
     }
 }

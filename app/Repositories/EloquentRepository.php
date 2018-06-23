@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: quan
@@ -32,6 +33,18 @@ abstract class EloquentRepository implements RepositoryInterface
         $this->_model = app()->make(
             $this->getModel()
         );
+    }
+
+    /**
+     * Check exist
+     */
+    public function checkExist($id)
+    {
+        // Check uuid type
+        if(!preg_match('/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/', $id))
+            return false;
+            
+        return ($this->_model->find($id) != null);
     }
 
     /**
@@ -92,7 +105,6 @@ abstract class EloquentRepository implements RepositoryInterface
             $result->delete();
             return true;
         }
-
         return false;
     }
 }
