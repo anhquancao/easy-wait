@@ -1,18 +1,18 @@
 version: '3'
 services:
-  node:
-    image: node
-    container_name: node_poc
-    working_dir: /app
-    build:
-      context: ./docker/node
-      dockerfile: Dockerfile
-    volumes:
-      - ./node:/app
-    ports:
-      - "3000:3000"
-    depends_on:
-      - postgres
+#  node:
+#    image: node
+#    container_name: node_poc
+#    working_dir: /app
+#    build:
+#      context: ./docker/node
+#      dockerfile: Dockerfile
+#    volumes:
+#      - ./node:/app
+#    ports:
+#      - "3000:3000"
+#    depends_on:
+#      - postgres
 
   redis2:
     image: redis
