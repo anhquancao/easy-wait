@@ -25,18 +25,18 @@ class QueueApiController extends ApiController
         $this->queueRepository = $queueRepository;
     }
 
-    // public function getQueues(Request $request)
-    // {
-    //     return $this->success($this->queueRepository->getQueues($request->search, $request->status));
-    // }
+    public function getQueues(Request $request)
+    {
+        return $this->success($this->queueRepository->getQueues($request->search, $request->status));
+    }
 
-    // public function getQueue($id)
-    // {
-    //     if (!$this->queueRepository->checkExist($id))
-    //         return $this->badRequest("Queue doesn't exist");
+    public function getQueue($id)
+    {
+        if (!$this->queueRepository->checkExist($id))
+            return $this->badRequest("Queue doesn't exist");
 
-    //     return $this->success($this->queueRepository->getQueue($id));
-    // }
+        return $this->success($this->queueRepository->getQueue($id));
+    }
 
     public function createQueue(Request $request)
     {
