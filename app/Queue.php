@@ -12,7 +12,7 @@ class Queue extends UuidModel
     use SoftDeletes;
 
     protected $fillable = [
-        'name', 'status'
+        'name', 'status', "user_id"
     ];
 
     public function user() {

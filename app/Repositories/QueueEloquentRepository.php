@@ -40,8 +40,6 @@ class QueueEloquentRepository extends EloquentRepository implements QueueReposit
 
     public function getQueue($id)
     {
-        return [
-            'queue' => new QueueResource(Queue::find($id))
-        ];
+        return Queue::find($id);
     }
 }
