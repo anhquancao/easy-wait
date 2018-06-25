@@ -27,5 +27,5 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
         integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
         crossorigin="anonymous"></script>
-<script type="text/javascript" src="/customer/bundle.9e92b23be6c0322a97ae.js"></script></body>
+<script type="text/javascript" src="/customer/bundle.a220a69cf0ee81124603.js"></script></body>
 </html>
