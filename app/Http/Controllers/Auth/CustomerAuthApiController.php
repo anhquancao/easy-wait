@@ -46,6 +46,7 @@ class CustomerAuthApiController extends ApiController
             "password" => bcrypt($request->password)
         ]);
 
+
         $token = JWTAuth::fromUser($user);
 
         return $this->success([
@@ -65,7 +66,9 @@ class CustomerAuthApiController extends ApiController
             ]);
         }
 
-        return $this->success($this->respondWithToken($jwt_token));
+        return $this->success([
+            "token" => $this->respondWithToken($jwt_token)
+        ]);
     }
 
     /**
@@ -107,7 +110,7 @@ class CustomerAuthApiController extends ApiController
 
         $user = JWTAuth::authenticate();
 
-        return $this->success(['user' => $user]);
+        return $this->success(['user' => new UserResource($user)]);
     }
 
 

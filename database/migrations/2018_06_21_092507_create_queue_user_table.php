@@ -20,6 +20,8 @@ class CreateQueueUserTable extends Migration
             $table->integer('order');
             $table->string('status');
             $table->timestamps();
+            $table->foreign("user_id")->references("id")->on("users");
+            $table->foreign("queue_id")->references("id")->on("queues");
         });
         DB::statement('ALTER TABLE queue_user ALTER COLUMN id SET DEFAULT uuid_generate_v4();');
     }

@@ -27,7 +27,10 @@ class QueueApiController extends ApiController
 
     public function getQueues(Request $request)
     {
-        return $this->success($this->queueRepository->getQueues($request->search, $request->status));
+        $queues = $this->queueRepository->getQueues($request->search, $request->status);
+        return $this->success([
+            "queues" => QueueResource::collection($queues)
+        ]);
     }
 
     public function getQueue($id)

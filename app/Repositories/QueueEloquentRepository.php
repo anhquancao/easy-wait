@@ -35,13 +35,7 @@ class QueueEloquentRepository extends EloquentRepository implements QueueReposit
         if ($status)
             $queues = $queues->where('status', $status);
 
-        $queues = $queues->orderBy('created_at', 'desc')->get();
-
-        return [
-            "queues" => $queues->map(function ($queue) {
-                return new QueueResource($queue);
-            }),
-        ];
+        return $queues->orderBy('created_at', 'desc')->paginate(20);
     }
 
     public function getQueue($id)

@@ -18,6 +18,9 @@ class Queue extends JsonResource
             "id" => $this->id,
             "name" => $this->name,
             "status" => $this->status,
+            "user" => new User($this->user),
+            "number_waiting_people" => $this->number_waiting_people,
+            "estimate_waiting_time" => $this->estimate_waiting_time,
             "created_at" => strtotime($this->created_at),
             "updated_at" => strtotime($this->updated_at)
         ];  

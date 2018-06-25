@@ -18,6 +18,8 @@ class CreateCustomerQueueTable extends Migration
             $table->uuid('customer_id');
             $table->uuid('queue_id');
             $table->timestamps();
+            $table->foreign("customer_id")->references("id")->on("users");
+            $table->foreign("queue_id")->references("id")->on("queues");
         });
         DB::statement('ALTER TABLE customer_queue ALTER COLUMN id SET DEFAULT uuid_generate_v4();');
     }
