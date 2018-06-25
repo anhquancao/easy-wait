@@ -98,7 +98,7 @@ class QueueApiController extends ApiController
             return $this->badRequest("Queue doesn't exist");
 
         $this->queueRepository->delete($id);
-        return $this->success("Success");
+        return $this->success(["message" => "Success"]);
     }
 
 }
