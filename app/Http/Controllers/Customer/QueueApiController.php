@@ -37,7 +37,7 @@ class QueueApiController extends ApiController
     public function getQueue($id)
     {
         if (!$this->queueRepository->checkExist($id))
-            return $this->badRequest("Queue doesn't exist");
+            return $this->badRequest(["message" => "Queue doesn't exist"]);
 
         $queue = $this->queueRepository->getQueue($id);
 
@@ -65,13 +65,13 @@ class QueueApiController extends ApiController
             "user_id" => JWTAuth::authenticate()->id
         ]);
 
-        return $this->success("Success");
+        return $this->success(["message" => "Success"]);
     }
 
     public function updateQueue($id, Request $request)
     {
         if (!$this->queueRepository->checkExist($id))
-            return $this->badRequest("Queue doesn't exist");
+            return $this->badRequest(["message" => "Queue doesn't exist"]);
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
@@ -89,13 +89,13 @@ class QueueApiController extends ApiController
             "status" => $request->status,
         ]);
 
-        return $this->success("Success");
+        return $this->success(["message" => "Success"]);
     }
 
     public function deleteQueue($id)
     {
         if (!$this->queueRepository->checkExist($id))
-            return $this->badRequest("Queue doesn't exist");
+            return $this->badRequest(["message" => "Queue doesn't exist"]);
 
         $this->queueRepository->delete($id);
         return $this->success(["message" => "Success"]);
