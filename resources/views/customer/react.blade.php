@@ -9,7 +9,7 @@
           integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <title>Customer Space</title>
     <script>
-        window.BASE_URL = "http://localhost";
+        window.BASE_URL = "http://keetool3.xyz";
     </script>
 </head>
 <body>
