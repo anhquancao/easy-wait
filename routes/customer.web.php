@@ -13,6 +13,6 @@
 //});
 
 
-Route::get('/{path?}', function () {
+Route::get('/customer/{path?}', function () {
     return view("customer.react");
 })->where("path", '.*');
