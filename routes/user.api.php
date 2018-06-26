@@ -10,10 +10,12 @@ Route::prefix("auth")->namespace("Auth")->group(function () {
     Route::post("sign-in", "CustomerAuthApiController@signIn");
 });
 
-// Route::prefix("queue")->middleware("auth.jwt")->namespace("User")->group(function () {
-//     Route::get("/", "QueueApiController@getQueues");
-//     Route::get("/{id}", "QueueApiController@getQueue");
-//     Route::post("/", "QueueApiController@createQueue");
-//     Route::put("/{id}", "QueueApiController@updateQueue");
-//     Route::delete("/{id}", "QueueApiController@deleteQueue");
-// });
+Route::prefix("queue-user")->middleware("auth.jwt")->namespace("User")->group(function () {
+    Route::get("/", "QueueUserApiController@getQueueRegisters");
+
+    // Route::get("/", "QueueUserApiController@getQueues");
+    // Route::get("/{id}", "QueueUserApiController@getQueue");
+    // Route::post("/", "QueueUserApiController@createQueue");
+    // Route::put("/{id}", "QueueUserApiController@updateQueue");
+    // Route::delete("/{id}", "QueueUserApiController@deleteQueue");
+});
