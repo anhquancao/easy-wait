@@ -10,10 +10,10 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\ApiController;
+use App\Http\Resources\Queue as QueueResource;
 use App\Repositories\QueueRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Http\Resources\Queue as QueueResource;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class QueueApiController extends ApiController
@@ -45,7 +45,7 @@ class QueueApiController extends ApiController
     public function getQueue($id)
     {
         if (!$this->queueRepository->checkExist($id))
-            return $this->badRequest("Queue doesn't exist");
+            return $this->badRequest(["message" => "Queue doesn't exist"]);
 
         $queue = $this->queueRepository->getQueue($id);
 
@@ -73,7 +73,7 @@ class QueueApiController extends ApiController
             "user_id" => JWTAuth::authenticate()->id
         ]);
 
-        return $this->success("Success");
+        return $this->success(["message" => "Success"]);
     }
 
     public function updateQueue($id, Request $request)
@@ -104,7 +104,7 @@ class QueueApiController extends ApiController
             "status" => $request->status,
         ]);
 
-        return $this->success("Success");
+        return $this->success(["message" => "Success"]);
     }
 
     public function deleteQueue($id)
