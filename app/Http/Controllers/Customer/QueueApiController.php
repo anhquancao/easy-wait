@@ -26,6 +26,14 @@ class QueueApiController extends ApiController
         $this->queueRepository = $queueRepository;
     }
 
+    public function getQueuesByCustomerId($userId)
+    {
+        $queues = $this->queueRepository->findQueuesByCustomerId($userId);
+        return [
+            "queues" => QueueResource::collection($queues)
+        ];
+    }
+
     public function getQueues(Request $request)
     {
         $queues = $this->queueRepository->getQueues($request->search, $request->status);
@@ -70,9 +78,16 @@ class QueueApiController extends ApiController
 
     public function updateQueue($id, Request $request)
     {
-        if (!$this->queueRepository->checkExist($id))
+        $queue = $this->queueRepository->getQueue($id);
+
+        if ($queue == null)
             return $this->badRequest("Queue doesn't exist");
 
+        if ($queue->user_id != JWTAuth::authenticate()->id) {
+            return $this->unauthorized([
+                "message" => "you cannot update this resource"
+            ]);
+        }
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'status' => 'required|string|max:255'
@@ -84,7 +99,7 @@ class QueueApiController extends ApiController
             ]);
         }
 
-        $queue = $this->queueRepository->update($id, [
+        $this->queueRepository->update($id, [
             "name" => $request->name,
             "status" => $request->status,
         ]);
@@ -94,9 +109,15 @@ class QueueApiController extends ApiController
 
     public function deleteQueue($id)
     {
-        if (!$this->queueRepository->checkExist($id))
+        $queue = $this->queueRepository->getQueue($id);
+        if ($queue == null)
             return $this->badRequest("Queue doesn't exist");
 
+        if ($queue->user_id != JWTAuth::authenticate()->id) {
+            return $this->unauthorized([
+                "message" => "you cannot delete this resource"
+            ]);
+        }
         $this->queueRepository->delete($id);
         return $this->success(["message" => "Success"]);
     }

@@ -42,4 +42,10 @@ class QueueEloquentRepository extends EloquentRepository implements QueueReposit
     {
         return Queue::find($id);
     }
+
+
+    public function findQueuesByCustomerId($id)
+    {
+        return Queue::where("user_id", $id)->orderBy('created_at', 'desc')->paginate(20);
+    }
 }
