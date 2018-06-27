@@ -7,6 +7,7 @@ use App\Repositories\QueueUserRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Repositories\QueueRepositoryInterface;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use App\QueueUser;
 
 class QueueUserApiController extends ApiController
 {
@@ -25,7 +26,8 @@ class QueueUserApiController extends ApiController
     {
         if (!$this->queueRepository->checkExist($request->queue_id))
             return $this->badRequest(["message" => "Queue doesn't exist"]);
-
+        if(QueueUser::where('status', 'waiting')->where('queue_id', $request->queue_id)->where('user_id',JWTAuth::authenticate()->id)->first())
+            return $this->badRequest(["message" => "You are already in queue"]);
         $this->queueUserRepository->create([
             "queue_id" => $request->queue_id,
             "user_id" => JWTAuth::authenticate()->id,
