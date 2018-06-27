@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Repositories\QueueEloquentRepository;
 use App\Repositories\QueueRepositoryInterface;
+use App\Repositories\QueueUserEloquentRepository;
+use App\Repositories\QueueUserRepositoryInterface;
 use App\Repositories\UserEloquentRepository;
 use App\Repositories\UserRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
@@ -37,6 +39,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(
             QueueRepositoryInterface::class,
             QueueEloquentRepository::class
+        );
+        
+        $this->app->singleton(
+            QueueUserRepositoryInterface::class,
+            QueueUserEloquentRepository::class
         );
     }
 }

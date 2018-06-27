@@ -11,7 +11,7 @@ Route::prefix("auth")->namespace("Auth")->group(function () {
 });
 
 Route::prefix("queue-user")->middleware("auth.jwt")->namespace("User")->group(function () {
-    Route::get("/", "QueueUserApiController@getQueueRegisters");
+    Route::post("/", "QueueUserApiController@hello");
 
     // Route::get("/", "QueueUserApiController@getQueues");
     // Route::get("/{id}", "QueueUserApiController@getQueue");
