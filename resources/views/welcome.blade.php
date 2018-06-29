@@ -81,8 +81,7 @@
                 </div>
 
                 <div class="links">
-                    <a href="/customer/sign-in">You are customer</a>
-                    <a href="/user/home"    >You are user</a>
+                    <a href="/auth/sign-in">SIGN IN NOW</a>
                 </div>
             </div>
         </div>

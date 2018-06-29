@@ -15,6 +15,19 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+Route::get('/customer/{path?}', function () {
+    return view("react.index");
+})->where("path", '.*');
+
+Route::get('/user/{path?}', function () {
+    return view("react.index");
+})->where("path", '.*');
+
+Route::get('/auth/{path?}', function () {
+    return view("react.index");
+})->where("path", '.*');
+
 Auth::routes();
 
 //Route::get('/home', 'CustomerHomeController@index')->name('home');
