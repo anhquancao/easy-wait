@@ -29,17 +29,13 @@ class QueueApiController extends ApiController
     public function getQueuesByCustomerId($userId)
     {
         $queues = $this->queueRepository->findQueuesByCustomerId($userId);
-        return [
-            "queues" => QueueResource::collection($queues)
-        ];
+        return QueueResource::collection($queues);
     }
 
     public function getQueues(Request $request)
     {
         $queues = $this->queueRepository->getQueues($request->search, $request->status);
-        return $this->success([
-            "queues" => QueueResource::collection($queues)
-        ]);
+        return QueueResource::collection($queues);
     }
 
     public function getQueue($id)
