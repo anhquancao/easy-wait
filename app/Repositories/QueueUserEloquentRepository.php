@@ -10,7 +10,6 @@
 namespace App\Repositories;
 
 use App\QueueUser;
-use App\Http\Resources\QueueUser as QueueUserResource;
 
 class QueueUserEloquentRepository extends EloquentRepository implements QueueUserRepositoryInterface
 {
@@ -24,11 +23,10 @@ class QueueUserEloquentRepository extends EloquentRepository implements QueueUse
         return QueueUser::class;
     }
 
-    public function create(array $attributes)
+    public function findByUserIdAndQueueId($userId, $queueId)
     {
-        $order = QueueUser::where('queue_id', $attributes['queue_id'])->where('status', 'waiting')->max('order') + 1;
-        $attributes['order'] = $order;
-        $attributes['status'] = 'waiting';
-        return $this->_model->create($attributes);
+        return QueueUser::where('queue_id', $queueId)
+            ->where('user_id', $userId)
+            ->first();
     }
 }

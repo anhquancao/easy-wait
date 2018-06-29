@@ -11,5 +11,5 @@ namespace App\Repositories;
 
 interface QueueUserRepositoryInterface
 {
-    public function create(array $attributes);
+    public function findByUserIdAndQueueId($userId, $queueId);
 }

@@ -6,15 +6,12 @@ use App\Repositories\QueueUserRepositoryInterface;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
-class Queue extends JsonResource
+class CustomerQueue extends JsonResource
 {
-
-    protected $queueUserRepository;
 
     public function __construct($resource)
     {
         parent::__construct($resource);
-        $this->queueUserRepository = app()->make(QueueUserRepositoryInterface::class);
     }
 
     /**
@@ -25,12 +22,10 @@ class Queue extends JsonResource
      */
     public function toArray($request)
     {
-        $user = JWTAuth::authenticate();
-        $queueUser = $this->queueUserRepository->findByUserIdAndQueueId($user->id, $this->id);
         return [
             "id" => $this->id,
             "name" => $this->name,
-            "status" => $queueUser != null ? $queueUser->status : "unregistered",
+            "status" => $this->status,
             "user" => new User($this->user),
             "number_waiting_people" => $this->number_waiting_people,
             "estimate_waiting_time" => $this->estimate_waiting_time,

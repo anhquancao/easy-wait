@@ -7,11 +7,12 @@
  * Time: 4:27 PM
  */
 
-namespace App\Http\Controllers\Customer;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\ApiController;
 use App\Http\Resources\Queue as QueueResource;
+use App\Http\Resources\CustomerQueue as CustomerQueueResource;
 use App\Repositories\QueueRepositoryInterface;
+use App\Repositories\QueueUserRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -19,17 +20,22 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 class QueueApiController extends ApiController
 {
     protected $queueRepository;
+    protected $queueUserRepository;
 
-    public function __construct(QueueRepositoryInterface $queueRepository)
+    public function __construct(
+        QueueRepositoryInterface $queueRepository,
+        QueueUserRepositoryInterface $queueUserRepository
+    )
     {
         parent::__construct();
         $this->queueRepository = $queueRepository;
+        $this->queueUserRepository = $queueUserRepository;
     }
 
     public function getQueuesByCustomerId($userId)
     {
         $queues = $this->queueRepository->findQueuesByCustomerId($userId);
-        return QueueResource::collection($queues);
+        return CustomerQueueResource::collection($queues);
     }
 
     public function getQueues(Request $request)
@@ -43,10 +49,10 @@ class QueueApiController extends ApiController
         if (!$this->queueRepository->checkExist($id))
             return $this->badRequest(["message" => "Queue doesn't exist"]);
 
-        $queue = $this->queueRepository->getQueue($id);
+        $queue = $this->queueRepository->find($id);
 
         return $this->success([
-            "queue" => new QueueResource($queue)
+            "queue" => new CustomerQueueResource($queue)
         ]);
     }
 
@@ -74,7 +80,7 @@ class QueueApiController extends ApiController
 
     public function updateQueue($id, Request $request)
     {
-        $queue = $this->queueRepository->getQueue($id);
+        $queue = $this->queueRepository->find($id);
 
         if ($queue == null)
             return $this->badRequest("Queue doesn't exist");
@@ -105,7 +111,7 @@ class QueueApiController extends ApiController
 
     public function deleteQueue($id)
     {
-        $queue = $this->queueRepository->getQueue($id);
+        $queue = $this->queueRepository->find($id);
         if ($queue == null)
             return $this->badRequest("Queue doesn't exist");
 
@@ -116,6 +122,60 @@ class QueueApiController extends ApiController
         }
         $this->queueRepository->delete($id);
         return $this->success(["message" => "Success"]);
+    }
+
+    public function register($queueId)
+    {
+        $userId = JWTAuth::authenticate()->id;
+        $queue = $this->queueRepository->find($queueId);
+
+        if ($queue == null)
+            return $this->badRequest(["message" => "Queue doesn't exist"]);
+
+        $queueUser = $this->queueUserRepository->findByUserIdAndQueueId($userId, $queueId);
+
+        if ($queueUser != null) {
+            return $this->badRequest([
+                "message" => "User already in queue"
+            ]);
+        }
+
+        $this->queueRepository->update($queueId, [
+            "number_waiting_people" => $queue->number_waiting_people + 1
+        ]);
+
+        $this->queueUserRepository->create([
+            "queue_id" => $queueId,
+            "user_id" => $userId,
+            "status" => "registered"
+        ]);
+
+        return $this->success(["status" => "registered"]);
+    }
+
+    public function unregister($queueId)
+    {
+        $userId = JWTAuth::authenticate()->id;
+        $queue = $this->queueRepository->find($queueId);
+
+        if ($queue == null)
+            return $this->badRequest(["message" => "Queue doesn't exist"]);
+
+        $queueUser = $this->queueUserRepository->findByUserIdAndQueueId($userId, $queueId);
+
+        if ($queueUser == null) {
+            return $this->badRequest([
+                "message" => "User not in queue"
+            ]);
+        }
+
+        $this->queueRepository->update($queueId, [
+            "number_waiting_people" => $queue->number_waiting_people - 1
+        ]);
+
+        $this->queueUserRepository->delete($queueUser->id);
+
+        return $this->success(["status" => "unregistered"]);
     }
 
 }

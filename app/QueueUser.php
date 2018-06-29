@@ -7,7 +7,7 @@ class QueueUser extends UuidModel
     protected $table = 'queue_user';
 
     protected $fillable = [
-        'user_id', 'queue_id', 'order', 'status'
+        'user_id', 'queue_id', 'status'
     ];
 
     public function user()

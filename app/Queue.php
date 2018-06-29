@@ -12,10 +12,12 @@ class Queue extends UuidModel
     use SoftDeletes;
 
     protected $fillable = [
-        'name', 'status', "user_id"
+        'name', 'status', "user_id",
+        'number_waiting_people', "estimate_waiting_time"
     ];
 
-    public function user() {
-        return $this->belongsTo(User::class,"user_id");
+    public function user()
+    {
+        return $this->belongsTo(User::class, "user_id");
     }
 }
