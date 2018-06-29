@@ -16,7 +16,7 @@ use App\Http\Resources\User as UserResource;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
-class CustomerAuthApiController extends ApiController
+class AuthApiController extends ApiController
 {
     protected $userRepository;
 
@@ -32,6 +32,7 @@ class CustomerAuthApiController extends ApiController
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
+            'type' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -43,9 +44,9 @@ class CustomerAuthApiController extends ApiController
         $user = $this->userRepository->create([
             "name" => $request->name,
             "email" => $request->email,
-            "password" => bcrypt($request->password)
+            "password" => bcrypt($request->password),
+            "type" => $request->type
         ]);
-
 
         $token = JWTAuth::fromUser($user);
 

@@ -28,5 +28,5 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
         integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
         crossorigin="anonymous"></script>
-<script type="text/javascript" src="/customer/bundle.bee1264c8f3b9df6a955.js"></script></body>
+<script type="text/javascript" src="/react/bundle.bee1264c8f3b9df6a955.js"></script></body>
 </html>
