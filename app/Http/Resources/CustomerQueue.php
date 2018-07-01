@@ -28,7 +28,7 @@ class CustomerQueue extends JsonResource
             "status" => $this->status,
             "user" => new User($this->user),
             "number_waiting_people" => $this->number_waiting_people,
-            "estimate_waiting_time" => $this->estimate_waiting_time,
+            "estimate_waiting_time" => $this->tini,
             "created_at" => strtotime($this->created_at),
             "updated_at" => strtotime($this->updated_at)
         ];

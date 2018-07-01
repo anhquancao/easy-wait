@@ -13,7 +13,7 @@ class Queue extends UuidModel
 
     protected $fillable = [
         'name', 'status', "user_id",
-        'number_waiting_people', "estimate_waiting_time"
+        'number_waiting_people', "tini", "tmoy", "trev"
     ];
 
     public function user()
