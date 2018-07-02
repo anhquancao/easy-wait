@@ -25,6 +25,9 @@ class CustomerQueue extends JsonResource
         return [
             "id" => $this->id,
             "name" => $this->name,
+            "tini" => $this->tini,
+            "tmoy" => $this->tmoy,
+            "trev" => $this->trev,
             "status" => $this->status,
             "user" => new User($this->user),
             "number_waiting_people" => $this->number_waiting_people,

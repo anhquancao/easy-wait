@@ -20,4 +20,9 @@ class Queue extends UuidModel
     {
         return $this->belongsTo(User::class, "user_id");
     }
+
+    public function queueUsers()
+    {
+        return $this->hasMany(QueueUser::class, "queue_id");
+    }
 }

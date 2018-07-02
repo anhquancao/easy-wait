@@ -11,6 +11,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\Queue as QueueResource;
 use App\Http\Resources\CustomerQueue as CustomerQueueResource;
+use App\QueueUser;
 use App\Repositories\QueueRepositoryInterface;
 use App\Repositories\QueueUserRepositoryInterface;
 use Illuminate\Http\Request;
@@ -60,7 +61,10 @@ class QueueApiController extends ApiController
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'status' => 'required|string|max:255'
+            'status' => 'required|string|max:255',
+            'tini' => 'required|numeric|min:0',
+            'tmoy' => 'required|numeric|min:0',
+            'trev' => 'required|numeric|min:0'
         ]);
 
         if ($validator->fails()) {
@@ -72,6 +76,9 @@ class QueueApiController extends ApiController
         $this->queueRepository->create([
             "name" => $request->name,
             "status" => $request->status,
+            'tini' => $request->tini,
+            'tmoy' => $request->tmoy,
+            'trev' => $request->trev,
             "user_id" => JWTAuth::authenticate()->id
         ]);
 
@@ -132,7 +139,7 @@ class QueueApiController extends ApiController
         if ($queue == null)
             return $this->badRequest(["message" => "Queue doesn't exist"]);
 
-        $queueUser = $this->queueUserRepository->findByUserIdAndQueueId($userId, $queueId);
+        $queueUser = $this->queueUserRepository->findByUserIdAndQueueIdAnhStatus($userId, $queueId, QueueUser::REGISTERED);
 
         if ($queueUser != null) {
             return $this->badRequest([
@@ -140,14 +147,12 @@ class QueueApiController extends ApiController
             ]);
         }
 
-        $this->queueRepository->update($queueId, [
-            "number_waiting_people" => $queue->number_waiting_people + 1
-        ]);
+        $this->queueRepository->increment($queueId, "number_waiting_people");
 
         $this->queueUserRepository->create([
             "queue_id" => $queueId,
             "user_id" => $userId,
-            "status" => "registered"
+            "status" => QueueUser::REGISTERED
         ]);
 
         return $this->success(["status" => "registered"]);
@@ -161,7 +166,7 @@ class QueueApiController extends ApiController
         if ($queue == null)
             return $this->badRequest(["message" => "Queue doesn't exist"]);
 
-        $queueUser = $this->queueUserRepository->findByUserIdAndQueueId($userId, $queueId);
+        $queueUser = $this->queueUserRepository->findByUserIdAndQueueIdAnhStatus($userId, $queueId, QueueUser::REGISTERED);
 
         if ($queueUser == null) {
             return $this->badRequest([
@@ -169,11 +174,12 @@ class QueueApiController extends ApiController
             ]);
         }
 
-        $this->queueRepository->update($queueId, [
-            "number_waiting_people" => $queue->number_waiting_people - 1
+        $this->queueUserRepository->update($queueUser->id, [
+            "status" => QueueUser::UNREGISTERED
         ]);
 
-        $this->queueUserRepository->delete($queueUser->id);
+        $this->queueRepository->decrement($queueId, "number_waiting_people");
+
 
         return $this->success(["status" => "unregistered"]);
     }

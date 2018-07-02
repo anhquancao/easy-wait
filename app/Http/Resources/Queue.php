@@ -27,9 +27,13 @@ class Queue extends JsonResource
     {
         $user = JWTAuth::authenticate();
         $queueUser = $this->queueUserRepository->findByUserIdAndQueueId($user->id, $this->id);
+        dd($this);
         return [
             "id" => $this->id,
             "name" => $this->name,
+            'tini' => $this->tini,
+            'tmoy' => $this->tmoy,
+            'trev' => $this->trev,
             "status" => $queueUser != null ? $queueUser->status : "unregistered",
             "user" => new User($this->user),
             "number_waiting_people" => $this->number_waiting_people,

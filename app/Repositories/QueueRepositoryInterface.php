@@ -15,4 +15,8 @@ interface QueueRepositoryInterface
 
     public function findQueuesByCustomerId($id);
 
+    public function increment($queueId, $column);
+
+    public function decrement($queueId, $column);
+
 }
